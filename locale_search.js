@@ -104,7 +104,7 @@ if (keyToSearch != null) {
         }
     });
 } else {
-    
+
     let path = process.argv[2];
     if (path.indexOf('english.json')) {
         path = path.slice(0, path.length - "english.json".length);
@@ -119,7 +119,7 @@ if (keyToSearch != null) {
     }
 
     let fs = require('fs');
-    fs.writeFile(path + "jsonoutput.txt", allInternalObjs(langFile), function(err) {
+    fs.writeFile(path + "/jsonoutput.txt", allInternalObjs(langFile), function(err) {
         if(err) {
             return console.log(err);
         }
