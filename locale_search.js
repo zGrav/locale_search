@@ -94,11 +94,67 @@ let deleteKeysFromObject = function (object, keys, options) {
 
 };
 
-let result = deleteKeysFromObject(langFile, [keyToSearch]);
+if (keyToSearch != null) {
+    let result = deleteKeysFromObject(langFile, [keyToSearch])
 
-let fs = require('fs');
-fs.writeFile(process.argv[2], JSON.stringify(result, null, 2), function(err) {
-    if(err) {
-        return console.log(err);
+    let fs = require('fs');
+    fs.writeFile(process.argv[2], JSON.stringify(result, null, 2), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+    });
+} else {
+    
+    let path = process.argv[2];
+    if (path.indexOf('english.json')) {
+        path = path.slice(0, path.length - "english.json".length);
+    } else if (path.indexOf('german.json')) {
+        path = path.slice(0, path.length - "german.json".length);
+    } else if (path.indexOf('portuguese.json')) {
+        path = path.slice(0, path.length - "portuguese.json".length);
+    } else if (path.indexOf('spanish.json')) {
+        path = path.slice(0, path.length - "spanish.json".length);
+    } else if (path.indexOf('turkish.json')) {
+        path = path.slice(0, path.length - "turkish.json".length);
     }
-});
+
+    let fs = require('fs');
+    fs.writeFile(path + "jsonoutput.txt", allInternalObjs(langFile), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+    });
+}
+
+// get keys of an object or array
+function getkeys(z){
+  var out=[];
+  for(var i in z){out.push(i)};
+  return out;
+}
+
+// print all inside an object
+function allInternalObjs(data, name) {
+  name = name || '';
+
+  return getkeys(data).reduce(function(olist, k) {
+
+    var v = data[k];
+
+    if(typeof v === 'object') {
+        if (name === '') {
+            olist.push.apply(olist, allInternalObjs(v, k));
+        } else {
+            olist.push.apply(olist, allInternalObjs(v, name + '.' + k));
+        }
+    }
+    else {
+        if (name === '') {
+            olist.push(k);
+        } else {
+            olist.push(name + '.' + k);
+        }
+    }
+    return olist;
+  }, []);
+}
