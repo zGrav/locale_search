@@ -32,7 +32,7 @@ then
         done
     else
         echo -e "\n"
-        echo "Cannot delete $1, key in use. Check output above.\n"
+        echo -e "Cannot delete $1, key in use. Check output above.\n"
     fi
 else
     echo "No key specified. Switching to search & destroy mode."
@@ -40,7 +40,7 @@ else
     locales=$PWD/*
     for f in $locales
     do
-        if [[ $f == *"emoji"* ]] || [[ $f == *"locale_"* ]] || [[ $f == *"jsonoutput"* ]] || [[ $f == *"german"* ]] || [[ $f == *"spanish"* ]] || [[ $f == *"portuguese"* ]] || [[ $f == *"turkish"* ]]
+        if [[ $f == *"emoji"* ]] || [[ $f == *"locale_"* ]] || [[ $f == *"jsonoutput"* ]]
         then
             continue
         else
@@ -87,7 +87,7 @@ else
                         done
                     else
                         echo -e "\n"
-                        echo "Cannot delete $i, key in use. Check output above.\n"
+                        echo -e "Cannot delete $i, key in use. Check output above.\n"
                     fi
                 fi
             done
