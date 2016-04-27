@@ -53,7 +53,7 @@ else
             for i in "${keys[@]}"
             do
                 :
-                if [[ $i == *"member_type"* ]] || [[ $i == *"errors."* ]] || [[ $i == *"preferences.groups.title"* ]] || [[ $i == *"preferences.locale.title"* ]] || [[ $i == *"preferences.title"* ]] || [[ $i == *"communities.friends.title"* ]]
+                if [[ $i == *"member_type"* ]] || [[ $i == *"errors."* ]] || [[ $i == *"preferences.groups.title"* ]] || [[ $i == *"preferences.locale.title"* ]] || [[ $i == *"preferences.title"* ]] || [[ $i == *"communities.friends.title"* ]] || [[ $i == *"preferences.channellist.title"* ]]
                 then
                     continue
                 else
