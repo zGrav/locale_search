@@ -5,9 +5,11 @@ then
     grep -rnw ../app ../../embedded -e "$1"
     res=$(grep -rnw ../app ../../embedded -e "$1" | wc -l) #outputs count
     shouldbe=0
+
     if [ $res = $shouldbe ]
     then
         locales=$PWD/*
+
         for f in $locales
         do
             if [[ $f == *"emoji"* ]] || [[ $f == *"locale_"* ]] || [[ $f == *"jsonoutput"* ]]
@@ -38,6 +40,7 @@ else
     echo "No key specified. Switching to search & destroy mode."
 
     locales=$PWD/*
+
     for f in $locales
     do
         if [[ $f == *"emoji"* ]] || [[ $f == *"locale_"* ]] || [[ $f == *"jsonoutput"* ]]

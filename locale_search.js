@@ -104,8 +104,8 @@ if (keyToSearch != null) {
         }
     });
 } else {
-
     let path = process.argv[2];
+
     if (path.indexOf('english.json')) {
         path = path.slice(0, path.length - "english.json".length);
     } else if (path.indexOf('german.json')) {
