@@ -119,6 +119,7 @@ if (keyToSearch != null) {
     }
 
     let fs = require('fs');
+
     fs.writeFile(path + "/jsonoutput.txt", allInternalObjs(langFile), function(err) {
         if(err) {
             return console.log(err);

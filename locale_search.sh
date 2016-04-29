@@ -1,5 +1,8 @@
 #!/bin/bash
 
+bold=$(tput bold)
+normal=$(tput sgr0)
+
 if [ ! -z "$1" ]
 then
     grep -rnw ../app ../../embedded -e "$1"
@@ -16,7 +19,7 @@ then
             then
                 continue
             else
-                echo "Searching in $f for $1..."
+                echo -e "\033[33mSearching in ${bold}$f ${normal}for ${bold}$1${normal}...\n"
 
                 oldsize=$(wc -c < "$f")
 
@@ -26,18 +29,22 @@ then
 
                 if [[ $oldsize = $newsize ]]
                 then
-                    echo -e "Key not found or an error has occurred.\n"
+                    echo -e "\033[31mKey not found or an error has occurred.\n"
                 else
-                    echo -e "Key deleted.\n"
+                    echo -e "\033[32mKey deleted.\n"
                 fi
             fi
         done
     else
         echo -e "\n"
-        echo -e "Cannot delete $1, key in use. Check output above.\n"
+        echo -e "\033[35mCannot delete ${bold}$1${normal}\033[35m, key in use. Check output above.\033[0m\n"
+
+        sleep 0.5
     fi
 else
-    echo "No key specified. Switching to search & destroy mode."
+    echo -e "\033[36mNo key specified. Switching to search & destroy mode in 3 seconds.\n"
+
+    sleep 3
 
     locales=$PWD/*
 
@@ -47,7 +54,7 @@ else
         then
             continue
         else
-            echo "Searching in $f..."
+            echo -e "\033[33mSearching in ${bold}$f${normal}...\n"
 
             node ./locale_search.js $f
 
@@ -63,16 +70,18 @@ else
                     grep -rnw ../app ../../embedded -e "$i"
                     res=$(grep -rnw ../app ../../embedded -e "$i" | wc -l) #outputs count
                     shouldbe=0
+
                     if [ $res = $shouldbe ]
                     then
                         locales=$PWD/*
+
                         for f in $locales
                         do
                             if [[ $f == *"emoji"* ]] || [[ $f == *"locale_"* ]] || [[ $f == *"jsonoutput"* ]]
                             then
                                 continue
                             else
-                                echo "Searching in $f for $i..."
+                                echo -e "\033[33mSearching in ${bold}$f${normal} for ${bold}$i${normal}...\n"
 
                                 oldsize=$(wc -c < "$f")
 
@@ -82,20 +91,24 @@ else
 
                                 if [[ $oldsize = $newsize ]]
                                 then
-                                    echo -e "Key not found or an error has occurred.\n"
+                                    echo -e "\033[31mKey not found or an error has occurred.\n"
                                 else
-                                    echo -e "Key deleted.\n"
+                                    echo -e "\033[32mKey deleted.\n"
                                 fi
                             fi
                         done
                     else
                         echo -e "\n"
-                        echo -e "Cannot delete $i, key in use. Check output above.\n"
+                        echo -e "\033[35mCannot delete ${bold}$i${normal}\033[35m, key in use. Check output above. Moving to next key in 0.5 seconds.\033[0m\n"
+
+                        sleep 0.5
                     fi
                 fi
             done
 
             rm ./jsonoutput.txt
+
+            unset IFS
         fi
     done
 fi
