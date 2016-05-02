@@ -1,15 +1,17 @@
 #!/bin/bash
 
+paths="../app ../../embedded"
+
 bold=$(tput bold)
 normal=$(tput sgr0)
 
 if [ ! -z "$1" ]
 then
-    grep -rnw ../app ../../embedded -e "$1"
-    res=$(grep -rnw ../app ../../embedded -e "$1" | wc -l) #outputs count
+    grep -rnw $paths -e "$1"
+    res=$(grep -rnw $paths -e "$1" | wc -l) #outputs count
     shouldbe=0
 
-    if [ $res = $shouldbe ]
+    if [ $res == $shouldbe ]
     then
         locales=$PWD/*
 
@@ -27,7 +29,7 @@ then
 
                 newsize=$(wc -c < "$f")
 
-                if [[ $oldsize = $newsize ]]
+                if [[ $oldsize == $newsize ]]
                 then
                     echo -e "\033[31mKey not found or an error has occurred.\n"
                 else
@@ -37,7 +39,7 @@ then
         done
     else
         echo -e "\n"
-        echo -e "\033[35mCannot delete ${bold}$1${normal}\033[35m, key in use. Check output above.\033[0m\n"
+        echo -e "\033[35mCannot delete ${bold}$1${normal} \033[35munder ${bold}$f${normal}\033[35m, key in use. Check output above.\033[0m\n"
 
         sleep 0.5
     fi
@@ -67,11 +69,11 @@ else
                 then
                     continue
                 else
-                    grep -rnw ../app ../../embedded -e "$i"
-                    res=$(grep -rnw ../app ../../embedded -e "$i" | wc -l) #outputs count
+                    grep -rnw $paths -e "$i"
+                    res=$(grep -rnw $paths -e "$i" | wc -l) #outputs count
                     shouldbe=0
 
-                    if [ $res = $shouldbe ]
+                    if [ $res == $shouldbe ]
                     then
                         locales=$PWD/*
 
@@ -89,7 +91,7 @@ else
 
                                 newsize=$(wc -c < "$f")
 
-                                if [[ $oldsize = $newsize ]]
+                                if [[ $oldsize == $newsize ]]
                                 then
                                     echo -e "\033[31mKey not found or an error has occurred.\n"
                                 else
@@ -99,9 +101,7 @@ else
                         done
                     else
                         echo -e "\n"
-                        echo -e "\033[35mCannot delete ${bold}$i${normal}\033[35m, key in use. Check output above. Moving to next key in 0.5 seconds.\033[0m\n"
-
-                        sleep 0.5
+                        echo -e "\033[35mCannot delete ${bold}$i${normal} \033[35munder ${bold}$f${normal}\033[35m, key in use. Check output above. Moving to next key.\033[0m\n"
                     fi
                 fi
             done
