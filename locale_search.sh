@@ -21,7 +21,7 @@ then
             then
                 continue
             else
-                echo -e "\033[33mSearching in ${bold}$f ${normal}for ${bold}$1${normal}...\n"
+                echo -e "\033[33mSearching in ${bold}$f ${normal}\033[33mfor ${bold}$1${normal}...\n"
 
                 oldsize=$(wc -c < "$f")
 
